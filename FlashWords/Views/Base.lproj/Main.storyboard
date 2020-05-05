@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -53,7 +54,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="Ieo-ar-Yp6">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="453" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
@@ -89,12 +90,155 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="fss-hl-ThR">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3gT-Qp-UTg"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3gT-Qp-UTg">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="Gnh-oP-BVF" id="hAJ-KA-juM"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="CEP-sF-4ry" kind="presentation" identifier="goToAddWord" id="oLf-1Y-wAH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3GB-y8-PSA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1268" y="7"/>
+        </scene>
+        <!--Add Words View Controller-->
+        <scene sceneID="I83-EW-Wnn">
+            <objects>
+                <viewController id="CEP-sF-4ry" customClass="AddWordsViewController" customModule="FlashWords" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jhd-nI-BkN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7wX-pI-2aJ">
+                                <rect key="frame" x="20" y="20" width="374" height="520"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New Word" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDG-Dk-8pF">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="f5t-G0-YlW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XX8-9v-C4e">
+                                        <rect key="frame" x="0.0" y="90" width="374" height="100"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90f-wA-Rij">
+                                                <rect key="frame" x="20" y="59" width="80" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Drewno" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r8I-Uj-yD4">
+                                                <rect key="frame" x="20" y="20" width="200" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="200" id="w4x-kg-me5"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="r8I-Uj-yD4" firstAttribute="leading" secondItem="XX8-9v-C4e" secondAttribute="leading" constant="20" id="7mp-My-pKQ"/>
+                                            <constraint firstAttribute="height" constant="100" id="8Sm-Wf-8bO"/>
+                                            <constraint firstItem="90f-wA-Rij" firstAttribute="top" secondItem="r8I-Uj-yD4" secondAttribute="bottom" constant="5" id="YFN-Fp-rR7"/>
+                                            <constraint firstItem="90f-wA-Rij" firstAttribute="leading" secondItem="XX8-9v-C4e" secondAttribute="leading" constant="20" id="eaw-cG-31b"/>
+                                            <constraint firstItem="r8I-Uj-yD4" firstAttribute="top" secondItem="XX8-9v-C4e" secondAttribute="top" constant="20" id="lZ1-p1-mJA"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5Y-n9-Nzs">
+                                        <rect key="frame" x="0.0" y="210" width="374" height="100"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Wood" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bng-Ng-Z45">
+                                                <rect key="frame" x="20" y="20" width="200" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="200" id="Cxs-eS-zMc"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translated Word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZW-bR-lcH">
+                                                <rect key="frame" x="20" y="59" width="125.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="HZW-bR-lcH" firstAttribute="top" secondItem="bng-Ng-Z45" secondAttribute="bottom" constant="5" id="6t3-Os-Zmt"/>
+                                            <constraint firstItem="HZW-bR-lcH" firstAttribute="leading" secondItem="U5Y-n9-Nzs" secondAttribute="leading" constant="20" id="MLK-h4-ysL"/>
+                                            <constraint firstAttribute="height" constant="100" id="PH9-QH-tgh"/>
+                                            <constraint firstItem="bng-Ng-Z45" firstAttribute="leading" secondItem="U5Y-n9-Nzs" secondAttribute="leading" constant="20" id="QA3-NP-Mkb"/>
+                                            <constraint firstItem="bng-Ng-Z45" firstAttribute="top" secondItem="U5Y-n9-Nzs" secondAttribute="top" constant="20" id="c9a-Dn-hle"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LF3-XX-f8z">
+                                        <rect key="frame" x="0.0" y="330" width="374" height="100"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Human using wood for building." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YYC-hG-JZl">
+                                                <rect key="frame" x="20" y="20" width="300" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="300" id="XqF-P2-rie"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Context of this word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qxg-xM-o8G">
+                                                <rect key="frame" x="20" y="59" width="154.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="1mT-2D-2TI"/>
+                                            <constraint firstItem="YYC-hG-JZl" firstAttribute="leading" secondItem="LF3-XX-f8z" secondAttribute="leading" constant="20" id="Cjy-88-LHc"/>
+                                            <constraint firstItem="Qxg-xM-o8G" firstAttribute="leading" secondItem="LF3-XX-f8z" secondAttribute="leading" constant="20" id="LmF-ff-xw2"/>
+                                            <constraint firstItem="YYC-hG-JZl" firstAttribute="top" secondItem="LF3-XX-f8z" secondAttribute="top" constant="20" id="Pvr-f1-nHC"/>
+                                            <constraint firstItem="Qxg-xM-o8G" firstAttribute="top" secondItem="YYC-hG-JZl" secondAttribute="bottom" constant="5" id="gD4-W1-Nad"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NxL-ph-2Lu">
+                                        <rect key="frame" x="0.0" y="450" width="374" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="EQG-Xt-BDt"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                        <state key="normal" title="Add"/>
+                                        <connections>
+                                            <action selector="addButtonPressed:" destination="CEP-sF-4ry" eventType="touchUpInside" id="yqL-yP-Eku"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="PDG-Dk-8pF" firstAttribute="centerX" secondItem="7wX-pI-2aJ" secondAttribute="centerX" id="0z6-Pb-RQY"/>
+                                    <constraint firstItem="NxL-ph-2Lu" firstAttribute="centerX" secondItem="7wX-pI-2aJ" secondAttribute="centerX" id="wbJ-Oz-Pk9"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="7wX-pI-2aJ" firstAttribute="top" secondItem="Cqb-CS-TaJ" secondAttribute="top" constant="20" id="DjQ-HO-opl"/>
+                            <constraint firstItem="7wX-pI-2aJ" firstAttribute="centerX" secondItem="Jhd-nI-BkN" secondAttribute="centerX" id="fJL-5U-0Pf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Cqb-CS-TaJ"/>
+                    </view>
+                    <connections>
+                        <outlet property="contextInput" destination="YYC-hG-JZl" id="ygu-wJ-5st"/>
+                        <outlet property="wordInput" destination="r8I-Uj-yD4" id="iVM-HO-uMp"/>
+                        <outlet property="word_tInput" destination="bng-Ng-Z45" id="5Og-X6-YgQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uQy-Ij-JfT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2005.7971014492755" y="6.0267857142857144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="77r-x2-bFX">

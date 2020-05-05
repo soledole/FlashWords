@@ -12,7 +12,7 @@ import SwipeCellKit
 
 class CategoryViewController: UITableViewController {
     
-    //Initialize Realm
+    //Initialize Realm and categories
     let realm = try! Realm()
     var categories : Results<Category>?
 
@@ -54,7 +54,6 @@ class CategoryViewController: UITableViewController {
     }
     
     func loadCategories() {
-        
         categories = realm.objects(Category.self)
         tableView.reloadData()
     }
@@ -70,6 +69,7 @@ class CategoryViewController: UITableViewController {
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categories?[indexPath.row]
         }
+
     }
     
     //MARK: - Add New Category

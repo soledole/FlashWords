@@ -11,12 +11,13 @@ import RealmSwift
 
 class WordsViewController: UITableViewController {
     
-    var wordResults : Results<Word>?
+    //Initialize Realm and wordResults
     let realm = try! Realm()
+    var wordResults : Results<Word>?
     
     var selectedCategory : Category? {
         didSet {
-            //loadWords()
+            loadWords()
         }
     }
     
@@ -28,7 +29,7 @@ class WordsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return wordResults?.count ?? 1
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordsCell", for: indexPath)
@@ -42,4 +43,23 @@ class WordsViewController: UITableViewController {
         }
         return cell
     }
+    
+    //MARK: - Data Manipulation Methods
+    func loadWords() {
+        wordResults = selectedCategory?.words.sorted(byKeyPath: "dateCreated", ascending: true)
+        tableView.reloadData()
+    }
+    
+    //MARK: - TableView Delegate Methods
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "goToAddWord", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! AddWordsViewController
+        destinationVC.sendCategory = selectedCategory
+    }
+    
+    
 }

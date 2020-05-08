@@ -12,7 +12,7 @@ import SwipeCellKit
 
 class CategoryViewController: UITableViewController {
     
-    //Initialize Realm
+    //Initialize Realm and categories
     let realm = try! Realm()
     var categories : Results<Category>?
 
@@ -54,13 +54,23 @@ class CategoryViewController: UITableViewController {
     }
     
     func loadCategories() {
-        
         categories = realm.objects(Category.self)
         tableView.reloadData()
     }
     
     //MARK: - TableView Delegation Methods
-    //Code here!
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToWords", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! WordsViewController
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categories?[indexPath.row]
+        }
+
+    }
     
     //MARK: - Add New Category
     @IBAction func addCategoryButtonPressed(_ sender: UIBarButtonItem) {

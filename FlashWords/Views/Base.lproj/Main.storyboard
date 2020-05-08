@@ -54,7 +54,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="Ieo-ar-Yp6">
-                            <rect key="frame" x="0.0" y="0.0" width="453" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
@@ -97,7 +97,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="CEP-sF-4ry" kind="presentation" identifier="goToAddWord" id="oLf-1Y-wAH"/>
+                        <segue destination="CEP-sF-4ry" kind="presentation" identifier="goToAddWord" modalPresentationStyle="pageSheet" id="oLf-1Y-wAH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3GB-y8-PSA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -219,6 +219,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0yE-wf-Arq">
                                         <rect key="frame" x="0.0" y="490" width="374" height="278"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <gestureRecognizers/>
                                     </view>
                                 </subviews>
                                 <constraints>

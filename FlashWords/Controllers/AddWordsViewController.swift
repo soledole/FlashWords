@@ -14,6 +14,7 @@ class AddWordsViewController: UIViewController {
     //Initialize Realm
     let realm = try! Realm()
     var sendCategory : Category?
+    var instanceOfAdd : WordsViewController!
 
     @IBOutlet weak var wordInput: UITextField!
     @IBOutlet weak var word_tInput: UITextField!
@@ -36,11 +37,8 @@ class AddWordsViewController: UIViewController {
                     newWord.dateCreated = Date()
                     
                     currentCategory.words.append(newWord)
-                    self.dismiss(animated: true, completion: {
-                        let parentVC = WordsViewController() //To check
-                        print("parentVC: \(parentVC)")
-                        parentVC.tableView.reloadData()
-                    })
+                    instanceOfAdd.tableView.reloadData()
+                    dismiss(animated: true, completion: nil)
                 }
             } catch {
                 print("Error saving new word, \(error)")

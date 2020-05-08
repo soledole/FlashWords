@@ -58,14 +58,13 @@ class WordsViewController: UITableViewController {
         
         let destinationVC = segue.destination as! AddWordsViewController
         destinationVC.sendCategory = selectedCategory
+        destinationVC.instanceOfAdd = self
     }
     
     //MARK: - Add New Methods
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "goToAddWord", sender: self)
     }
-
-    
 }
 
 //MARK: - Swipe Cell Delegate Methods

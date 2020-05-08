@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
 class WordsViewController: UITableViewController {
     
@@ -31,8 +32,8 @@ class WordsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WordsCell", for: indexPath)
+       
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WordsCell", for: indexPath) as! SwipeTableViewCell
         if let word = wordResults?[indexPath.row] {
             
             cell.textLabel?.text = word.word
@@ -41,25 +42,54 @@ class WordsViewController: UITableViewController {
             cell.textLabel?.text = "No words yet"
             cell.detailTextLabel?.text = "-"
         }
+        cell.delegate = self
         return cell
     }
     
     //MARK: - Data Manipulation Methods
     func loadWords() {
+        //wordResults = realm.objects(Word.self) //To show all items
         wordResults = selectedCategory?.words.sorted(byKeyPath: "dateCreated", ascending: true)
         tableView.reloadData()
     }
     
     //MARK: - TableView Delegate Methods
-    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "goToAddWord", sender: self)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let destinationVC = segue.destination as! AddWordsViewController
         destinationVC.sendCategory = selectedCategory
     }
     
+    //MARK: - Add New Methods
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "goToAddWord", sender: self)
+    }
+
     
 }
+
+//MARK: - Swipe Cell Delegate Methods
+extension WordsViewController: SwipeTableViewCellDelegate {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            // handle action by updating model with deletion
+            if let wordForDeletion = self.wordResults?[indexPath.row] {
+                do {
+                    try self.realm.write {
+                        self.realm.delete(wordForDeletion)
+                    }
+                } catch {
+                    print("Error deleting category, \(error)")
+                }
+                tableView.reloadData()
+            }
+        }
+        // customize the action appearance
+        //deleteAction.image = UIImage(named: "delete_icon")
+        return [deleteAction]
+    }
+}
+

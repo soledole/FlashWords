@@ -19,12 +19,12 @@ class CategoryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Show Realm Database Path
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
         loadCategories()
         
         tableView.rowHeight = 80.0
+        
+        //Show Realm Database Path
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
     //MARK: - TableView Datasource Methods
@@ -81,7 +81,12 @@ class CategoryViewController: UITableViewController {
             
             let newCategory = Category()
             newCategory.name = textField.text!
-            self.save(category: newCategory)
+            
+            if textField.text!.isEmpty {
+                print("textField is empty")
+            } else {
+                self.save(category: newCategory)
+            }
         }
         
         alert.addTextField { (alertTextField) in

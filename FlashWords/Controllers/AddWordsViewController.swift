@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class AddWordsViewController: UIViewController {
+class AddWordsViewController: UIViewController, UITextFieldDelegate {
     
     //Initialize Realm
     let realm = try! Realm()
@@ -23,6 +23,13 @@ class AddWordsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.wordInput.delegate = self
+        self.word_tInput.delegate = self
+        self.contextInput.delegate = self
+        
+        //Close keyboard
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     //MARK: - Database Datasource Methods
@@ -36,15 +43,35 @@ class AddWordsViewController: UIViewController {
                     newWord.context = contextInput.text!
                     newWord.dateCreated = Date()
                     
-                    currentCategory.words.append(newWord)
-                    instanceOfAdd.tableView.reloadData()
-                    dismiss(animated: true, completion: nil)
+                    if wordInput.text!.isEmpty || word_tInput.text!.isEmpty {
+                        print("wordInput or word_tInput is empty")
+                    } else {
+                        currentCategory.words.append(newWord)
+                        instanceOfAdd.tableView.reloadData()
+                        dismiss(animated: true, completion: nil)
+                    }
                 }
             } catch {
                 print("Error saving new word, \(error)")
             }
         }
         
+    }
+    //MARK: - UITextFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.switchBasedNextTextField(textField)
+        return true
+    }
+    
+    private func switchBasedNextTextField(_ textField: UITextField) {
+        switch textField {
+        case self.word_tInput:
+            self.wordInput.becomeFirstResponder()
+        case self.wordInput:
+            self.contextInput.becomeFirstResponder()
+        default:
+            self.contextInput.resignFirstResponder()
+        }
     }
     
     

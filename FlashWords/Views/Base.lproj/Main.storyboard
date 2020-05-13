@@ -57,6 +57,9 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="Gnh-oP-BVF" id="vBU-mE-v2y"/>
+                            </connections>
                         </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WordsCell" textLabel="6Qj-gS-ySF" detailTextLabel="Rwk-gc-uAh" style="IBUITableViewCellStyleValue1" id="YIN-6h-klm" customClass="SwipeTableViewCell" customModule="SwipeCellKit">

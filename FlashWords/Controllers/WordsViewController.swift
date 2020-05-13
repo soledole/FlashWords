@@ -24,6 +24,10 @@ class WordsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Close keyboard
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     //MARK: - TableView Datasource Methods
@@ -89,6 +93,25 @@ extension WordsViewController: SwipeTableViewCellDelegate {
         // customize the action appearance
         //deleteAction.image = UIImage(named: "delete_icon")
         return [deleteAction]
+    }
+}
+
+//MARK: - Search Bar Methods
+extension WordsViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        wordResults = wordResults?.filter("word_t CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        tableView.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadWords()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
     }
 }
 

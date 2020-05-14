@@ -49,7 +49,7 @@ class WordsViewController: UITableViewController {
     
     //SwipeCell
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
+        //Delete Word
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
             if let wordForDeletion = self.wordResults?[indexPath.row] {
                 do {
@@ -62,17 +62,28 @@ class WordsViewController: UITableViewController {
                 tableView.reloadData()
             }
         }
-        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        //Edit Word
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
+            self.performSegue(withIdentifier: "goToEditWord", sender: self)
+        }
+        editAction.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        
+        let config = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         config.performsFirstActionWithFullSwipe = false
         return config
     }
     
     //MARK: - TableView Delegate Methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        let destinationVC = segue.destination as! AddWordsViewController
-        destinationVC.sendCategory = selectedCategory
-        destinationVC.instanceOfAdd = self
+        if (segue.identifier == "goToAddWord") {
+            let addWordsVC = segue.destination as! AddWordsViewController
+            addWordsVC.sendCategory = selectedCategory
+            addWordsVC.instanceOfAdd = self
+        }
+        if (segue.identifier == "goToEditWord") {
+            let editWordsVC = segue.destination as! EditWordsViewController
+            
+        }
     }
     
     //MARK: - Data Manipulation Methods
@@ -86,8 +97,6 @@ class WordsViewController: UITableViewController {
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "goToAddWord", sender: self)
     }
-    
-    
 }
 
 //MARK: - Search Bar Methods

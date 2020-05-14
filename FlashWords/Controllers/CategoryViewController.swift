@@ -19,7 +19,7 @@ class CategoryViewController: UITableViewController {
         
         loadCategories()
         
-        tableView.rowHeight = 80.0
+        tableView.rowHeight = 100.0
         
         //Show Realm Database Path
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
@@ -39,22 +39,58 @@ class CategoryViewController: UITableViewController {
     
     //Swipe Cell
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
+        //Delete Category
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            if let categoryForDeletion = self.categories?[indexPath.row] {
-                do {
-                    try self.realm.write {
-                        self.realm.delete(categoryForDeletion)
+            
+            let alert = UIAlertController(title: "Delete Category", message: "Are you sure about it?", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Delete", style: .default) { (action) in
+                
+                if let categoryForDeletion = self.categories?[indexPath.row] {
+                    do {
+                        try self.realm.write {
+                            self.realm.delete(categoryForDeletion)
+                        }
+                    } catch {
+                        print("Error deleting category, \(error)")
                     }
-                } catch {
-                    print("Error deleting category, \(error)")
+                    tableView.reloadData()
                 }
-                tableView.reloadData()
             }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+        }
+        //Edit Category
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
+            
+            var textField = UITextField()
+            let alert = UIAlertController(title: "Edit Category", message: "If you do typo, you can change the name.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Edit", style: .default) { (action) in
+                
+                if textField.text!.isEmpty {
+                    print("textField is empty")
+                } else {
+                    do {
+                        try self.realm.write {
+                            self.categories?[indexPath.row].setValue(textField.text, forKey: "name")
+                        }
+                    } catch {
+                        print("Error changing category, \(error)")
+                    }
+                    tableView.reloadData()
+                }
+            }
+            alert.addTextField { (alertTextField) in
+                alertTextField.placeholder = "Enter the edited name"
+                textField = alertTextField
+            }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
         }
         deleteAction.image = UIImage(named: "delete_icon")
+        editAction.image = UIImage(named: "edit_icon")
+        editAction.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         
-        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        let config = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         config.performsFirstActionWithFullSwipe = false
         return config
     }

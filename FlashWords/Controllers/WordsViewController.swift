@@ -82,7 +82,7 @@ class WordsViewController: UITableViewController {
         }
         if (segue.identifier == "goToEditWord") {
             let editWordsVC = segue.destination as! EditWordsViewController
-            
+            editWordsVC.instanceOfEdit = self
         }
     }
     

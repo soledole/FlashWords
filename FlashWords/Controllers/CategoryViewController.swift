@@ -57,7 +57,10 @@ class CategoryViewController: UITableViewController {
                 }
             }
             alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion:{
+                alert.view.superview?.isUserInteractionEnabled = true
+                alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissOnTapOutside)))
+            })
         }
         //Edit Category
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
@@ -80,11 +83,14 @@ class CategoryViewController: UITableViewController {
                 }
             }
             alert.addTextField { (alertTextField) in
-                alertTextField.placeholder = "Enter the edited name"
+                alertTextField.text = self.categories?[indexPath.row].name
                 textField = alertTextField
             }
             alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion:{
+                alert.view.superview?.isUserInteractionEnabled = true
+                alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissOnTapOutside)))
+            })
         }
         deleteAction.image = UIImage(named: "delete_icon")
         editAction.image = UIImage(named: "edit_icon")
@@ -93,6 +99,9 @@ class CategoryViewController: UITableViewController {
         let config = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         config.performsFirstActionWithFullSwipe = false
         return config
+    }
+    @objc func dismissOnTapOutside(){
+       dismiss(animated: true, completion: nil)
     }
     
     //MARK: - TableView Delegation Methods
@@ -146,7 +155,10 @@ class CategoryViewController: UITableViewController {
             textField = alertTextField
         }
         alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion:{
+            alert.view.superview?.isUserInteractionEnabled = true
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissOnTapOutside)))
+        })
     }
 
     

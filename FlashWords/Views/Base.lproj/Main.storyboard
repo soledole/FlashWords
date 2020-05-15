@@ -242,9 +242,9 @@
                         <viewLayoutGuide key="safeArea" id="Cqb-CS-TaJ"/>
                     </view>
                     <connections>
-                        <outlet property="contextInput" destination="YYC-hG-JZl" id="ygu-wJ-5st"/>
-                        <outlet property="wordInput" destination="r8I-Uj-yD4" id="iVM-HO-uMp"/>
-                        <outlet property="word_tInput" destination="bng-Ng-Z45" id="5Og-X6-YgQ"/>
+                        <outlet property="contextInput" destination="YYC-hG-JZl" id="Hl6-ql-CZl"/>
+                        <outlet property="wordInput" destination="bng-Ng-Z45" id="LDB-rc-4Eu"/>
+                        <outlet property="word_tInput" destination="r8I-Uj-yD4" id="PQv-3l-x3v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uQy-Ij-JfT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -365,6 +365,7 @@
                                                 <state key="normal" title="Edit"/>
                                                 <connections>
                                                     <action selector="addButtonPressed:" destination="CEP-sF-4ry" eventType="touchUpInside" id="EcE-jM-Fxl"/>
+                                                    <action selector="editButtonPressed:" destination="NRS-XF-ZpZ" eventType="touchUpInside" id="07Q-Ym-hUL"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wgi-G3-Ul8">
@@ -392,6 +393,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="xZ8-QS-ty1"/>
                     </view>
+                    <connections>
+                        <outlet property="contextInput" destination="5lT-k5-dAI" id="2vd-s7-4sR"/>
+                        <outlet property="wordInput" destination="dir-xy-LPb" id="iFq-8e-DTI"/>
+                        <outlet property="word_tInput" destination="jdH-wM-dec" id="Sbb-iw-Ufq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BBR-WG-qTX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

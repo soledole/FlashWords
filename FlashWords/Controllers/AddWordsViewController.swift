@@ -11,7 +11,7 @@ import RealmSwift
 
 class AddWordsViewController: UIViewController, UITextFieldDelegate {
     
-    //Initialize Realm
+    //Initialize Realm and Others
     let realm = try! Realm()
     var sendCategory : Category?
     var instanceOfAdd : WordsViewController!
@@ -55,7 +55,6 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
                 print("Error saving new word, \(error)")
             }
         }
-        
     }
     //MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

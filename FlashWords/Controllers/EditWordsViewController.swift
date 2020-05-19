@@ -13,7 +13,10 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
     
     //Initialize Realm and Others
     let realm = try! Realm()
+    var sendWord : Word?
+    var sendCell : Int?
     var instanceOfEdit : WordsViewController!
+    var wordResults : Results<Word>?
     
     @IBOutlet weak var wordInput: UITextField!
     @IBOutlet weak var word_tInput: UITextField!
@@ -35,23 +38,31 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Load Datasource Methods
     func loadData() {
-        wordInput.text = ""
-        word_tInput.text = ""
-        contextInput.text = ""
+        wordInput.text = sendWord?.word
+        word_tInput.text = self.sendWord?.word_t
+        contextInput.text = self.sendWord?.context
+        
+        wordResults = realm.objects(Word.self)
     }
+    
     //MARK: - Database Datasource Methods
     @IBAction func editButtonPressed(_ sender: UIButton) {
-
+         if wordInput.text!.isEmpty || word_tInput.text!.isEmpty {
+            print("wordInput or word_tInput is empty")
+         } else {
             do {
-                try self.realm.write {
-                    //Here will be code to update Realm
+                try! realm.write {
+                    self.wordResults?[sendCell!].setValue(wordInput.text, forKey: "word")
+                    self.wordResults?[sendCell!].setValue(word_tInput.text, forKey: "word_t")
+                    self.wordResults?[sendCell!].setValue(contextInput.text, forKey: "context")
+                    
                     instanceOfEdit.tableView.reloadData()
                     dismiss(animated: true, completion: nil)
                 }
             } catch {
-                print("Error saving new word, \(error)")
+                print("Error changing word, \(error)")
             }
-        
+        }
     }
     //MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -61,9 +72,9 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
     
     private func switchBasedNextTextField(_ textField: UITextField) {
         switch textField {
-        case self.word_tInput:
-            self.wordInput.becomeFirstResponder()
         case self.wordInput:
+            self.word_tInput.becomeFirstResponder()
+        case self.word_tInput:
             self.contextInput.becomeFirstResponder()
         default:
             self.contextInput.resignFirstResponder()

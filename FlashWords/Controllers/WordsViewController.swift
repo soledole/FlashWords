@@ -13,6 +13,7 @@ class WordsViewController: UITableViewController {
     //Initialize Realm and wordResults
     let realm = try! Realm()
     var wordResults : Results<Word>?
+    var selectedCell : Int = 0
     
     var selectedCategory : Category? {
         didSet {
@@ -47,8 +48,9 @@ class WordsViewController: UITableViewController {
         return cell
     }
     
-    //SwipeCell
+    //MARK: - SwipeCell
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        selectedCell = Int(indexPath.row) //For editWordsVC.selectedWord
         //Delete Word
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
             if let wordForDeletion = self.wordResults?[indexPath.row] {
@@ -80,8 +82,11 @@ class WordsViewController: UITableViewController {
             addWordsVC.sendCategory = selectedCategory
             addWordsVC.instanceOfAdd = self
         }
+        
         if (segue.identifier == "goToEditWord") {
             let editWordsVC = segue.destination as! EditWordsViewController
+            editWordsVC.sendCell = selectedCell
+            editWordsVC.sendWord = wordResults?[selectedCell]
             editWordsVC.instanceOfEdit = self
         }
     }

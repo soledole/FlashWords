@@ -37,7 +37,7 @@ class CategoryViewController: UITableViewController {
         return cell
     }
     
-    //Swipe Cell
+    //MARK: - SwipeCell
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //Delete Category
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
@@ -110,12 +110,10 @@ class CategoryViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         let destinationVC = segue.destination as! WordsViewController
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categories?[indexPath.row]
         }
-
     }
     
     //MARK: - Data Manipulation Methods

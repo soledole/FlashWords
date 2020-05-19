@@ -64,9 +64,9 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
     
     private func switchBasedNextTextField(_ textField: UITextField) {
         switch textField {
-        case self.word_tInput:
-            self.wordInput.becomeFirstResponder()
         case self.wordInput:
+            self.word_tInput.becomeFirstResponder()
+        case self.word_tInput:
             self.contextInput.becomeFirstResponder()
         default:
             self.contextInput.resignFirstResponder()

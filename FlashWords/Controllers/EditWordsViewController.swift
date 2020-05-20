@@ -51,7 +51,7 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
             print("wordInput or word_tInput is empty")
          } else {
             do {
-                try! realm.write {
+                try realm.write {
                     self.wordResults?[sendCell!].setValue(wordInput.text, forKey: "word")
                     self.wordResults?[sendCell!].setValue(word_tInput.text, forKey: "word_t")
                     self.wordResults?[sendCell!].setValue(contextInput.text, forKey: "context")

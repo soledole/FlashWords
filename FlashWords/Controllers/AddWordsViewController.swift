@@ -15,6 +15,7 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
     let realm = try! Realm()
     var sendCategory : Category?
     var instanceOfAdd : WordsViewController!
+    var translate = Translate()
 
     @IBOutlet weak var wordInput: UITextField!
     @IBOutlet weak var word_tInput: UITextField!
@@ -56,6 +57,7 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
     //MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.switchBasedNextTextField(textField)
@@ -70,6 +72,13 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
             self.contextInput.becomeFirstResponder()
         default:
             self.contextInput.resignFirstResponder()
+        }
+    }
+    
+    //MARK: - API Request
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let word = wordInput.text {
+            translate.fetchTranslate(word: word)
         }
     }
     

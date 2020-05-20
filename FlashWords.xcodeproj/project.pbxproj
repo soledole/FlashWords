@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		122AFB6F5F409A355E38A8F3 /* Pods_FlashWords.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE025291FEB3A977F58695C /* Pods_FlashWords.framework */; };
+		D6369D1A24744B680099DB5D /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6369D1924744B680099DB5D /* Translate.swift */; };
 		D640469F245AEFAA0040802E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D640469E245AEFAA0040802E /* Category.swift */; };
 		D65A66BF246DB82F00B0E1F7 /* EditWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */; };
 		D685D163246055F300CABED4 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685D162246055F300CABED4 /* WordsViewController.swift */; };
@@ -25,6 +26,7 @@
 		38B1D694C8E2A0DAAE6434E9 /* Pods-FlashWords.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashWords.release.xcconfig"; path = "Target Support Files/Pods-FlashWords/Pods-FlashWords.release.xcconfig"; sourceTree = "<group>"; };
 		866584E99AFC57C6F250B0B5 /* Pods-FlashWords.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashWords.debug.xcconfig"; path = "Target Support Files/Pods-FlashWords/Pods-FlashWords.debug.xcconfig"; sourceTree = "<group>"; };
 		8FE025291FEB3A977F58695C /* Pods_FlashWords.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlashWords.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6369D1924744B680099DB5D /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		D640469E245AEFAA0040802E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordsViewController.swift; sourceTree = "<group>"; };
 		D685D162246055F300CABED4 /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			children = (
 				D640469E245AEFAA0040802E /* Category.swift */,
 				D685D1662460594500CABED4 /* Word.swift */,
+				D6369D1924744B680099DB5D /* Translate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				D685D163246055F300CABED4 /* WordsViewController.swift in Sources */,
 				D6DDE3CB2459ED60009855B8 /* SceneDelegate.swift in Sources */,
 				D65A66BF246DB82F00B0E1F7 /* EditWordsViewController.swift in Sources */,
+				D6369D1A24744B680099DB5D /* Translate.swift in Sources */,
 				D640469F245AEFAA0040802E /* Category.swift in Sources */,
 				D685D1672460594500CABED4 /* Word.swift in Sources */,
 				D685D16B2460682900CABED4 /* AddWordsViewController.swift in Sources */,

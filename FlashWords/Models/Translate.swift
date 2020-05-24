@@ -7,38 +7,36 @@
 //
 
 import Foundation
+import Firebase
+
+let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: .pl)
+let englishPolishTranslator = NaturalLanguage.naturalLanguage().translator(options: options)
+
+let conditions = ModelDownloadConditions(
+    allowsCellularAccess: false,
+    allowsBackgroundDownloading: false
+)
+
+protocol TranslateDelegate {
+    func didTranslate(translatedWord: String)
+}
 
 struct Translate {
-    let langIn = "en"
-    let langOut = "pol"
-    let baseURL = "https://api.mymemory.translated.net/get"
-    let apiKey = "D35D632E-A835-42CC-B990-73ACC181D985"
     
-    func fetchTranslate(word: String) {
-        let urlString = "\(baseURL)?q=\(word)&langpair=\(langIn)|\(langOut)"
-        performRequest(urlString: urlString)
-    }
+    var delegate: TranslateDelegate?
     
-    func performRequest(urlString: String) {
-        print("urlString: \(urlString)")
-        if let url = URL(string: urlString) {
-            print("It should work")
-            let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { (data, response, error) in
-                if error != nil {
-                    print(error!)
-                    return
-                }
-                if let safeData = data {
-                    let dataString = String(data: safeData, encoding: .utf8)
-                    print(safeData)
-                }
+    func fetchTranslate(for word: String) {
+        englishPolishTranslator.downloadModelIfNeeded(with: conditions) { error in
+            guard error == nil else { return }
+            print("You already downloaded successfully language model.")
         }
-        task.resume()
-        } else {
-            print("its not gonna work")
-        }
-    }
         
+        englishPolishTranslator.translate(word) { translatedText, error in
+            guard error == nil, let translatedText = translatedText else { return }
+
+            print("Translated Word: \(translatedText)")
+            self.delegate?.didTranslate(translatedWord: translatedText)
+        }
+    }
     
 }

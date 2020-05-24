@@ -28,6 +28,8 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
         self.word_tInput.delegate = self
         self.contextInput.delegate = self
         
+        translate.delegate = self
+        
         //Close keyboard
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
@@ -75,12 +77,28 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //MARK: - API Request
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let word = wordInput.text {
-            translate.fetchTranslate(word: word)
+        if textField == wordInput {
+        
+            if wordInput.text!.isEmpty {
+                print("wordInput is empty")
+            } else {
+                let wordToTranslate = wordInput.text!
+                translate.fetchTranslate(for: wordToTranslate)
+            }
         }
     }
     
     
+}
+
+//MARK: - ML Kit Request
+extension AddWordsViewController: TranslateDelegate {
+    
+    func didTranslate(translatedWord: String) {
+        
+        DispatchQueue.main.async {
+            self.word_tInput.text = translatedWord
+        }
+    }
 }

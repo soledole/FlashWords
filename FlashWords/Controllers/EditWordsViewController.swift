@@ -17,6 +17,7 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
     var sendCell : Int?
     var instanceOfEdit : WordsViewController!
     var wordResults : Results<Word>?
+    var translate = Translate()
     
     @IBOutlet weak var wordInput: UITextField!
     @IBOutlet weak var word_tInput: UITextField!
@@ -28,6 +29,8 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
         self.wordInput.delegate = self
         self.word_tInput.delegate = self
         self.contextInput.delegate = self
+        
+        translate.delegate = self
         
         loadData()
         
@@ -64,6 +67,7 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
     //MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.switchBasedNextTextField(textField)
@@ -81,5 +85,26 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == wordInput {
+            if wordInput.text!.isEmpty {
+            } else {
+                let wordToTranslate = wordInput.text!
+                translate.fetchTranslate(for: wordToTranslate)
+            }
+        }
+    }
     
+    
+}
+
+//MARK: - ML Kit Request
+extension EditWordsViewController: TranslateDelegate {
+    
+    func didTranslate(translatedWord: String) {
+        
+        DispatchQueue.main.async {
+            self.word_tInput.text = translatedWord
+        }
+    }
 }

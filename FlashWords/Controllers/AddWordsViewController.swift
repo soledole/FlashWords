@@ -38,25 +38,26 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Database Datasource Methods
     @IBAction func addButtonPressed(_ sender: UIButton) {
         if let currentCategory = self.sendCategory {
-            do {
-                try self.realm.write {
-                    let newWord = Word()
-                    newWord.word = wordInput.text!
-                    newWord.word_t = word_tInput.text!
-                    newWord.context = contextInput.text!
-                    newWord.dateCreated = Date()
-                    
-                    if wordInput.text!.isEmpty || word_tInput.text!.isEmpty {
-                        print("wordInput or word_tInput is empty")
-                    } else {
-                        currentCategory.words.append(newWord)
+
+            if wordInput.text!.isEmpty || word_tInput.text!.isEmpty {
+                print("wordInput or word_tInput is empty")
+            } else {
+                    do {
+                        try self.realm.write {
+                            let newWord = Word()
+                            newWord.word = wordInput.text!
+                            newWord.word_t = word_tInput.text!
+                            newWord.context = contextInput.text!
+                            newWord.dateCreated = Date()
+                            
+                            currentCategory.words.append(newWord)
+                        }
                         instanceOfAdd.tableView.reloadData()
                         dismiss(animated: true, completion: nil)
+                    } catch {
+                        print("Error saving new word, \(error)")
                     }
                 }
-            } catch {
-                print("Error saving new word, \(error)")
-            }
         }
     }
     

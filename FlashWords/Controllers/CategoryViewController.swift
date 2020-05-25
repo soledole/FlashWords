@@ -38,6 +38,18 @@ class CategoryViewController: UITableViewController {
     }
     
     //MARK: - SwipeCell
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let learnAction = UIContextualAction(style: .normal, title: "Learn") { (action, view, nil) in
+            self.performSegue(withIdentifier: "goToLearnWord", sender: self)
+        }
+        learnAction.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        learnAction.image = UIImage(named: "learn_icon")
+        
+        let config = UISwipeActionsConfiguration(actions: [learnAction])
+        config.performsFirstActionWithFullSwipe = false
+        return config
+    }
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //Delete Category
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
@@ -110,9 +122,15 @@ class CategoryViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! WordsViewController
-        if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = categories?[indexPath.row]
+        if (segue.identifier == "goToWords") {
+            let destinationVC = segue.destination as! WordsViewController
+            if let indexPath = tableView.indexPathForSelectedRow {
+                destinationVC.selectedCategory = categories?[indexPath.row]
+            }
+        }
+        if (segue.identifier == "goToLearnWord") {
+            let destinationVC = segue.destination as! LearnWordsViewController
+            //Here will be something
         }
     }
     

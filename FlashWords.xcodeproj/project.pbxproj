@@ -11,6 +11,7 @@
 		D6369D1A24744B680099DB5D /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6369D1924744B680099DB5D /* Translate.swift */; };
 		D640469F245AEFAA0040802E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D640469E245AEFAA0040802E /* Category.swift */; };
 		D65A66BF246DB82F00B0E1F7 /* EditWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */; };
+		D66361C5247C4C7300E55F0C /* LearnWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66361C4247C4C7300E55F0C /* LearnWordsViewController.swift */; };
 		D673C5072477B72700764FEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D673C5062477B72700764FEC /* GoogleService-Info.plist */; };
 		D685D163246055F300CABED4 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685D162246055F300CABED4 /* WordsViewController.swift */; };
 		D685D1672460594500CABED4 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685D1662460594500CABED4 /* Word.swift */; };
@@ -30,6 +31,7 @@
 		D6369D1924744B680099DB5D /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		D640469E245AEFAA0040802E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordsViewController.swift; sourceTree = "<group>"; };
+		D66361C4247C4C7300E55F0C /* LearnWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnWordsViewController.swift; sourceTree = "<group>"; };
 		D673C5062477B72700764FEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D685D162246055F300CABED4 /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
 		D685D1662460594500CABED4 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				D685D162246055F300CABED4 /* WordsViewController.swift */,
 				D685D16A2460682900CABED4 /* AddWordsViewController.swift */,
 				D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */,
+				D66361C4247C4C7300E55F0C /* LearnWordsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				D6DDE3CD2459ED60009855B8 /* CategoryViewController.swift in Sources */,
 				D6DDE3C92459ED60009855B8 /* AppDelegate.swift in Sources */,
 				D685D163246055F300CABED4 /* WordsViewController.swift in Sources */,
+				D66361C5247C4C7300E55F0C /* LearnWordsViewController.swift in Sources */,
 				D6DDE3CB2459ED60009855B8 /* SceneDelegate.swift in Sources */,
 				D65A66BF246DB82F00B0E1F7 /* EditWordsViewController.swift in Sources */,
 				D6369D1A24744B680099DB5D /* Translate.swift in Sources */,

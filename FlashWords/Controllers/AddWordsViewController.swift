@@ -97,7 +97,6 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
 extension AddWordsViewController: TranslateDelegate {
     
     func didTranslate(translatedWord: String) {
-        
         DispatchQueue.main.async {
             self.word_tInput.text = translatedWord
         }

@@ -13,6 +13,7 @@ class CategoryViewController: UITableViewController {
     //Initialize Realm and categories
     let realm = try! Realm()
     var categories : Results<Category>?
+    var selectedCategory : Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +40,10 @@ class CategoryViewController: UITableViewController {
     
     //MARK: - SwipeCell
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        //goToLearn
+        selectedCategory = Int(indexPath.row) //For editWordsVC.selectedWord
         let learnAction = UIContextualAction(style: .normal, title: "Learn") { (action, view, nil) in
-            self.performSegue(withIdentifier: "goToLearnWord", sender: self)
+            self.performSegue(withIdentifier: "goToLearn", sender: self)
         }
         learnAction.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         learnAction.image = UIImage(named: "learn_icon")
@@ -123,14 +126,14 @@ class CategoryViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "goToWords") {
-            let destinationVC = segue.destination as! WordsViewController
+            let wordsVC = segue.destination as! WordsViewController
             if let indexPath = tableView.indexPathForSelectedRow {
-                destinationVC.selectedCategory = categories?[indexPath.row]
+                wordsVC.selectedCategory = categories?[indexPath.row]
             }
         }
-        if (segue.identifier == "goToLearnWord") {
-            let destinationVC = segue.destination as! LearnWordsViewController
-            //Here will be something
+        if (segue.identifier == "goToLearn") {
+            let learnWordsVC = segue.destination as! LearnWordsViewController
+            learnWordsVC.sendCategory = categories?[selectedCategory]
         }
     }
     

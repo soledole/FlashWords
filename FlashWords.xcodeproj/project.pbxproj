@@ -10,6 +10,7 @@
 		122AFB6F5F409A355E38A8F3 /* Pods_FlashWords.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE025291FEB3A977F58695C /* Pods_FlashWords.framework */; };
 		D6369D1A24744B680099DB5D /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6369D1924744B680099DB5D /* Translate.swift */; };
 		D640469F245AEFAA0040802E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D640469E245AEFAA0040802E /* Category.swift */; };
+		D64077AA2484E33700BC4E00 /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64077A92484E33700BC4E00 /* Words.swift */; };
 		D65A66BF246DB82F00B0E1F7 /* EditWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */; };
 		D66361C5247C4C7300E55F0C /* LearnWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66361C4247C4C7300E55F0C /* LearnWordsViewController.swift */; };
 		D673C5072477B72700764FEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D673C5062477B72700764FEC /* GoogleService-Info.plist */; };
@@ -30,6 +31,7 @@
 		8FE025291FEB3A977F58695C /* Pods_FlashWords.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlashWords.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6369D1924744B680099DB5D /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		D640469E245AEFAA0040802E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		D64077A92484E33700BC4E00 /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
 		D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordsViewController.swift; sourceTree = "<group>"; };
 		D66361C4247C4C7300E55F0C /* LearnWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnWordsViewController.swift; sourceTree = "<group>"; };
 		D673C5062477B72700764FEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -107,9 +109,10 @@
 		D6096AF1245AEB54000743F4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D6369D1924744B680099DB5D /* Translate.swift */,
 				D640469E245AEFAA0040802E /* Category.swift */,
 				D685D1662460594500CABED4 /* Word.swift */,
-				D6369D1924744B680099DB5D /* Translate.swift */,
+				D64077A92484E33700BC4E00 /* Words.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				D6DDE3CB2459ED60009855B8 /* SceneDelegate.swift in Sources */,
 				D65A66BF246DB82F00B0E1F7 /* EditWordsViewController.swift in Sources */,
 				D6369D1A24744B680099DB5D /* Translate.swift in Sources */,
+				D64077AA2484E33700BC4E00 /* Words.swift in Sources */,
 				D640469F245AEFAA0040802E /* Category.swift in Sources */,
 				D685D1672460594500CABED4 /* Word.swift in Sources */,
 				D685D16B2460682900CABED4 /* AddWordsViewController.swift in Sources */,

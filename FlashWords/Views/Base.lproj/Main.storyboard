@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iwY-8T-WTi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iwY-8T-WTi">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -335,6 +335,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ebR-yQ-okb" userLabel="freeSpaceView">
                                         <rect key="frame" x="0.0" y="250.33333333333329" width="335" height="453.66666666666674"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="ZX3-Zx-rAu" appends="YES" id="Kzg-PE-L6W"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                             </stackView>
@@ -349,10 +353,18 @@
                         <viewLayoutGuide key="safeArea" id="U4e-5q-TD8"/>
                     </view>
                     <connections>
+                        <outlet property="categoryCount" destination="6dc-K9-GKV" id="lUZ-MC-PMp"/>
                         <outlet property="categoryLabel" destination="muz-gL-wkO" id="ZHz-iN-eTB"/>
+                        <outlet property="contextLabel" destination="AdW-bj-QCv" id="e1t-Gl-PP3"/>
+                        <outlet property="wordLabel" destination="IgA-eh-jdg" id="SUz-NO-AYl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7u-D4-z4i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="down" id="ZX3-Zx-rAu" userLabel="swipeDown">
+                    <connections>
+                        <action selector="swipeDown:" destination="aUF-PI-pQt" id="CKd-dP-vcV"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="981.60000000000002" y="722.66009852216757"/>
         </scene>

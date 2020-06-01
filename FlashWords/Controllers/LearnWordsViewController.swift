@@ -7,13 +7,19 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LearnWordsViewController: UIViewController {
     
     //Initialize Realm and Others
+    let realm = try! Realm()
     var sendCategory : Category?
+    var words = Words()
     
     @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var categoryCount: UILabel!
+    @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet weak var contextLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +34,16 @@ class LearnWordsViewController: UIViewController {
     //MARK: - Data Manipulation Methods
     func loadWords() {
         categoryLabel.text = sendCategory?.name
+        
+        categoryCount.text = String("\(words.actualWord+1) of \(words.getFreshWords().count)")
+        wordLabel.text = words.getFreshWords()[words.actualWord].word
+        contextLabel.text = words.getFreshWords()[words.actualWord].context
     }
+    
+    @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
+        wordLabel.text = words.getFreshWords()[words.actualWord].word_t
+    }
+    
     
         
 }

@@ -11,10 +11,14 @@ import RealmSwift
 
 struct Words {
     let realm = try! Realm()
-    let actualWord = 0
+    var actualWord = 0
     
     func getFreshWords() -> Results<Word> {
         let filteredWords = realm.objects(Word.self).filter("fresh = true")
         return filteredWords
+    }
+    
+    mutating func nextWord() {
+        actualWord += 1
     }
 }

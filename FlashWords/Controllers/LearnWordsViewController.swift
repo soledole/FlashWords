@@ -32,6 +32,7 @@ class LearnWordsViewController: UIViewController {
     }
     
     //MARK: - Data Manipulation Methods
+    var lastWord = false
     func loadWords() {
         categoryLabel.text = sendCategory?.name
         
@@ -40,10 +41,59 @@ class LearnWordsViewController: UIViewController {
         contextLabel.text = words.getFreshWords()[words.actualWord].context
     }
     
+    var checked = false
+    //Check the word translation
     @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
         wordLabel.text = words.getFreshWords()[words.actualWord].word_t
+        checked = true
+        
+        if words.getFreshWords().count == words.actualWord+1 { lastWord = true }
+    }
+    //If answere is right
+    @IBAction func swipeRight(_ sender: UISwipeGestureRecognizer) {
+        if checked == true {
+            print("YES")
+            do {
+                try realm.write {
+//                    words.getFreshWords()[words.actualWord].setValue(false, forKey: "fresh")
+//                    words.getFreshWords()[words.actualWord].setValue(false, forKey: "hard")
+                }
+            } catch {
+                 print("Error changing word-hard, \(error)")
+            }
+            
+            checked = false
+            if lastWord == false {
+                words.nextWord()
+                loadWords()
+            } else {
+                print("Exit")
+            }
+            
+        }
+    }
+    //If answere is wrong
+    @IBAction func swipeLeft(_ sender: UISwipeGestureRecognizer) {
+        if checked == true {
+            print("NO")
+            do {
+                try realm.write {
+//                    words.getFreshWords()[words.actualWord].setValue(false, forKey: "fresh")
+//                    words.getFreshWords()[words.actualWord].setValue(true, forKey: "hard")
+                }
+            } catch {
+                 print("Error changing word-hard, \(error)")
+            }
+            
+            checked = false
+            if lastWord == false {
+                words.nextWord()
+                loadWords()
+            } else {
+                print("Exit")
+            }
+            
+        }
     }
     
-    
-        
 }

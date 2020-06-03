@@ -338,6 +338,8 @@
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="ZX3-Zx-rAu" appends="YES" id="Kzg-PE-L6W"/>
+                                            <outletCollection property="gestureRecognizers" destination="UiC-V3-Swn" appends="YES" id="RSD-BK-ZXB"/>
+                                            <outletCollection property="gestureRecognizers" destination="COk-pC-fKV" appends="YES" id="zgz-Ym-EIr"/>
                                         </connections>
                                     </view>
                                 </subviews>
@@ -363,6 +365,16 @@
                 <swipeGestureRecognizer direction="down" id="ZX3-Zx-rAu" userLabel="swipeDown">
                     <connections>
                         <action selector="swipeDown:" destination="aUF-PI-pQt" id="CKd-dP-vcV"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="UiC-V3-Swn" userLabel="swipeRight">
+                    <connections>
+                        <action selector="swipeRight:" destination="aUF-PI-pQt" id="prA-e3-QH0"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="COk-pC-fKV" userLabel="swipeLeft">
+                    <connections>
+                        <action selector="swipeLeft:" destination="aUF-PI-pQt" id="arG-rv-z7u"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>

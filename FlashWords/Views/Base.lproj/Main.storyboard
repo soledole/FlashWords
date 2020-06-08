@@ -358,6 +358,7 @@
                         <outlet property="categoryCount" destination="6dc-K9-GKV" id="lUZ-MC-PMp"/>
                         <outlet property="categoryLabel" destination="muz-gL-wkO" id="ZHz-iN-eTB"/>
                         <outlet property="contextLabel" destination="AdW-bj-QCv" id="e1t-Gl-PP3"/>
+                        <outlet property="swipeDown" destination="ZX3-Zx-rAu" id="29J-Qv-e1t"/>
                         <outlet property="wordLabel" destination="IgA-eh-jdg" id="SUz-NO-AYl"/>
                     </connections>
                 </viewController>

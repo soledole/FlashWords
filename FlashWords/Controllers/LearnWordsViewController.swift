@@ -14,7 +14,13 @@ class LearnWordsViewController: UIViewController {
     //Initialize Realm and Others
     let realm = try! Realm()
     var sendCategory : Category?
-    var words = Words()
+    var wordResults : Results<Word>?
+    var testVersion = true
+    var actualWord = 0
+    var checked = false
+    var lastWord = false
+    var right = 0
+    var wrong = 0
     
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var categoryCount: UILabel!
@@ -24,95 +30,161 @@ class LearnWordsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         categoryLabel.text = sendCategory?.name
-        if words.checkNew() == false {
-            wordLabel.text = "Done for today 😉"
-            contextLabel.text = "You have to wait until tomorow for the next repeat."
-            swipeDown.isEnabled = false
-            return
-        }
-        loadWords()
+        filterWords()
     }
     
     //MARK: - TableView Delegation Methods
     @IBAction func goBackButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
-    //MARK: - Data Manipulation Methods
-    var lastWord = false
-    var checked = false
+    //MARK: - Main Methods
+    func setWordResultForCategory(){
+        wordResults = sendCategory?.words.sorted(byKeyPath: "dateCreated", ascending: true)
+    }
     func loadWords() {
-        categoryCount.text = String("\(words.actualWord+1) of \(words.getWords().count)")
-        wordLabel.text = words.getWords()[words.actualWord].word
-        contextLabel.text = words.getWords()[words.actualWord].context
+        if testVersion == true { print("actualWord: \(actualWord)")}
+        
+        categoryCount.text = String("\(actualWord+1) of \(wordResults!.count)")
+        wordLabel.text = wordResults?[actualWord].word
+        contextLabel.text = wordResults?[actualWord].context
+        
+        if testVersion == true { print(wordResults) }
+    }
+    
+    //MARK: - Common states
+    func checkToRepeat() -> Bool {
+        wordResults = wordResults!.filter("toRepeat = true")
+        if wordResults!.isEmpty {
+            print("nothing to repeat")
+            setWordResultForCategory()
+            return false
+        } else {
+            print("there is something to repeat")
+            return true
+        }
+    }
+    func checkFresh() -> Bool {
+        wordResults = wordResults!.filter("fresh = true")
+        if wordResults!.isEmpty {
+            print("nothing fresh")
+            setWordResultForCategory()
+            return false
+        } else {
+            print("there is something fresh")
+            return true
+        }
+    }
+    func checkHard() -> Bool {
+        wordResults = wordResults!.filter("hard = true")
+        if wordResults!.isEmpty {
+            print("nothing hard")
+            setWordResultForCategory()
+            return false
+        } else {
+            print("there is something hard")
+            return true
+        }
+    }
+    //Choose one of them
+    func filterWords() {
+        setWordResultForCategory()
+        if checkToRepeat() == true {
+            print("run only with words to repeat")
+            loadWords()
+        }  else if checkFresh() == true {
+            print("run only with fresh words")
+            loadWords()
+        } else if checkHard() == true {
+            print("run only with hard words")
+            loadWords()
+        } else {
+            print("nope")
+            noMoreWords()
+        }
+        if testVersion == true { print("----------")}
+    }
+    
+    //MARK: - Endings
+    func noMoreWords() {
+        categoryCount.text = ""
+        wordLabel.text = "Done for today 😉"
+        contextLabel.text = "You have to wait until tomorow for the next repeat."
+        return
     }
     func endRound() {
         swipeDown.isEnabled = false
         wordLabel.text = "END"
-        contextLabel.text = "You've got \(words.right) good answer, and \(words.wrong) wrong."
-        words.actualWord = 0
-        words.right = 0
-        words.wrong = 0
-        words.setDate(forCategory: sendCategory!)
+        contextLabel.text = "You've got \(right) good answer, and \(wrong) wrong."
+        actualWord = 0
+        right = 0
+        wrong = 0
+        //filterWords() //-> To loop whole script
     }
+    
+    //MARK: - Data manipulation methods
     //Check the word translation
     @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
-        wordLabel.text = words.getWords()[words.actualWord].word_t
+        wordLabel.text = wordResults?[actualWord].word_t
         checked = true
         
-        if words.getWords().count == words.actualWord+1 { lastWord = true ; print("lastWord") }
+        if wordResults?.count == actualWord+1 {
+            lastWord = true
+            print("It will be last word")
+        }
     }
     //If answere is right
     @IBAction func swipeRight(_ sender: UISwipeGestureRecognizer) {
+        if testVersion == true { print("right swipe, checked: \(checked)") }
         if checked == true {
             print("YES")
-            words.right += 1
+            right += 1
             checked = false
-            do {
-                try realm.write {
-                    words.getWords()[words.actualWord].setValue(false, forKey: "fresh")
-                    words.getWords()[words.actualWord].setValue(false, forKey: "hard")
-                }
-            } catch {
-                 print("Error changing word-hard, \(error)")
-            }
-
+            
             if lastWord == false {
-                words.nextWord()
+                actualWord += 1
                 loadWords()
             } else {
                 print("Exit")
                 endRound()
             }
             
-        }
-    }
-    //If answere is wrong
-    @IBAction func swipeLeft(_ sender: UISwipeGestureRecognizer) {
-        if checked == true {
-            print("NO")
-            words.wrong += 1
             do {
                 try realm.write {
-                    words.getWords()[words.actualWord].setValue(false, forKey: "fresh")
-                    words.getWords()[words.actualWord].setValue(true, forKey: "hard")
+                    wordResults?[actualWord].setValue(false, forKey: "fresh")
+                    wordResults?[actualWord].setValue(false, forKey: "hard")
                 }
             } catch {
                  print("Error changing word-hard, \(error)")
             }
-
+        }
+    }
+    //If answere is wrong
+    @IBAction func swipeLeft(_ sender: UISwipeGestureRecognizer) {
+        if testVersion == true { print("left swipe, checked: \(checked)")}
+        if checked == true {
+            wrong += 1
             checked = false
+            
             if lastWord == false {
-                words.nextWord()
+                actualWord += 1
                 loadWords()
             } else {
                 print("Exit")
                 endRound()
             }
-
+            
+            do {
+                try realm.write {
+                    wordResults?[actualWord].setValue(false, forKey: "fresh")
+                    wordResults?[actualWord].setValue(true, forKey: "hard")
+                }
+            } catch {
+                 print("Error changing word-hard, \(error)")
+            }
         }
     }
+    
     
 }

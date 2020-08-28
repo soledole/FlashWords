@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import Firebase
+import MLKitTranslate
 
-let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: .pl)
-let englishPolishTranslator = NaturalLanguage.naturalLanguage().translator(options: options)
+let options = TranslatorOptions(sourceLanguage: .english, targetLanguage: .polish)
+let englishPolishTranslator = Translator.translator(options: options)
 
 let conditions = ModelDownloadConditions(
     allowsCellularAccess: false,

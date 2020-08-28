@@ -12,7 +12,6 @@
 		D640469F245AEFAA0040802E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D640469E245AEFAA0040802E /* Category.swift */; };
 		D65A66BF246DB82F00B0E1F7 /* EditWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */; };
 		D66361C5247C4C7300E55F0C /* LearnWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66361C4247C4C7300E55F0C /* LearnWordsViewController.swift */; };
-		D673C5072477B72700764FEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D673C5062477B72700764FEC /* GoogleService-Info.plist */; };
 		D685D163246055F300CABED4 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685D162246055F300CABED4 /* WordsViewController.swift */; };
 		D685D1672460594500CABED4 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685D1662460594500CABED4 /* Word.swift */; };
 		D685D16B2460682900CABED4 /* AddWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685D16A2460682900CABED4 /* AddWordsViewController.swift */; };
@@ -32,7 +31,6 @@
 		D640469E245AEFAA0040802E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D65A66BE246DB82F00B0E1F7 /* EditWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordsViewController.swift; sourceTree = "<group>"; };
 		D66361C4247C4C7300E55F0C /* LearnWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnWordsViewController.swift; sourceTree = "<group>"; };
-		D673C5062477B72700764FEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D685D162246055F300CABED4 /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
 		D685D1662460594500CABED4 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		D685D16A2460682900CABED4 /* AddWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordsViewController.swift; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 				D6096AEF245AEB31000743F4 /* Views */,
 				D6096AEE245AEB22000743F4 /* Supporting Files */,
 				D6DDE3D62459ED60009855B8 /* Info.plist */,
-				D673C5062477B72700764FEC /* GoogleService-Info.plist */,
 			);
 			path = FlashWords;
 			sourceTree = "<group>";
@@ -209,7 +206,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6DDE3D52459ED60009855B8 /* LaunchScreen.storyboard in Resources */,
-				D673C5072477B72700764FEC /* GoogleService-Info.plist in Resources */,
 				D6DDE3D22459ED60009855B8 /* Assets.xcassets in Resources */,
 				D6DDE3D02459ED60009855B8 /* Main.storyboard in Resources */,
 			);

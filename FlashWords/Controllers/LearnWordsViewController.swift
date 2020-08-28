@@ -17,6 +17,7 @@ class LearnWordsViewController: UIViewController {
     var wordResults : Results<Word>?
     var testVersion = true
     var actualWord = 0
+    var wordSelected = 0
     var checked = false
     var lastWord = false
     var right = 0
@@ -43,10 +44,12 @@ class LearnWordsViewController: UIViewController {
     func setWordResultForCategory(){
         wordResults = sendCategory?.words.sorted(byKeyPath: "dateCreated", ascending: true)
     }
+    func resetCounter() {
+         categoryCount.text = String("\(wordSelected+1) of \(wordResults!.count)")
+    }
     func loadWords() {
         if testVersion == true { print("actualWord: \(actualWord)")}
         
-        categoryCount.text = String("\(actualWord+1) of \(wordResults!.count)")
         wordLabel.text = wordResults?[actualWord].word
         contextLabel.text = wordResults?[actualWord].context
         
@@ -95,6 +98,7 @@ class LearnWordsViewController: UIViewController {
             loadWords()
         }  else if checkFresh() == true {
             print("run only with fresh words")
+            resetCounter()
             loadWords()
         } else if checkHard() == true {
             print("run only with hard words")
@@ -124,6 +128,27 @@ class LearnWordsViewController: UIViewController {
     }
     
     //MARK: - Data manipulation methods
+    //Save data for right answere
+    func saveIfRight() {
+        do {
+            try realm.write {
+                wordResults?[actualWord].setValue(false, forKey: "fresh")
+                wordResults?[actualWord].setValue(false, forKey: "hard")
+            }
+        } catch {
+             print("Error changing word-hard, \(error)")
+        }
+    }
+    func saveIfWrong() {
+        do {
+            try realm.write {
+                wordResults?[actualWord].setValue(false, forKey: "fresh")
+                wordResults?[actualWord].setValue(true, forKey: "hard")
+            }
+        } catch {
+             print("Error changing word-hard, \(error)")
+        }
+    }
     //Check the word translation
     @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
         wordLabel.text = wordResults?[actualWord].word_t
@@ -143,20 +168,14 @@ class LearnWordsViewController: UIViewController {
             checked = false
             
             if lastWord == false {
-                actualWord += 1
+                print("actual: \(actualWord)")
+                saveIfRight()
+                //actualWord += 1
+                wordSelected += 1
                 loadWords()
             } else {
                 print("Exit")
                 endRound()
-            }
-            
-            do {
-                try realm.write {
-                    wordResults?[actualWord].setValue(false, forKey: "fresh")
-                    wordResults?[actualWord].setValue(false, forKey: "hard")
-                }
-            } catch {
-                 print("Error changing word-hard, \(error)")
             }
         }
     }
@@ -173,15 +192,6 @@ class LearnWordsViewController: UIViewController {
             } else {
                 print("Exit")
                 endRound()
-            }
-            
-            do {
-                try realm.write {
-                    wordResults?[actualWord].setValue(false, forKey: "fresh")
-                    wordResults?[actualWord].setValue(true, forKey: "hard")
-                }
-            } catch {
-                 print("Error changing word-hard, \(error)")
             }
         }
     }

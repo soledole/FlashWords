@@ -25,6 +25,8 @@ class LearnWordsViewController: UIViewController {
     var lastWord = false
     var right = 0
     var wrong = 0
+    var rightWords = [String]()
+    var wrongWords = [String]()
     
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var categoryCount: UILabel!
@@ -34,7 +36,7 @@ class LearnWordsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         categoryLabel.text = sendCategory?.name
         startLearn()
     }
@@ -84,6 +86,40 @@ class LearnWordsViewController: UIViewController {
     func checkNumber() -> Int {
         return Int.random(in: 0..<wordQuantity)
     }
+    func createRightArray() {
+        rightWords.append((wordResults?[chosenWord].id)!)
+    }
+    func createWrongArray() {
+        wrongWords.append((wordResults?[chosenWord].id)!)
+    }
+    func saveData() {
+        if right > 0 {
+            for i in 0...rightWords.count-1 {
+                let filterById = realm.objects(Word.self).filter("id = %@", "\(rightWords[i])")
+                try! realm.write {
+                    filterById.setValue(false, forKey: "hard")
+                }
+                if testVersion == true {
+                    print("---Save-right answere---")
+                    print("\(i) Word: \(rightWords[i])")
+                    print("Filter: \(filterById)")
+                }
+            }
+        }
+        if wrong > 0 {
+            for i in 0...wrongWords.count-1 {
+                let filterById = realm.objects(Word.self).filter("id = %@", "\(wrongWords[i])")
+                try! realm.write {
+                    filterById.setValue(true, forKey: "hard")
+                }
+                if testVersion == true {
+                    print("---Save-wrong answere---")
+                    print("\(i) Word: \(wrongWords[i])")
+                    print("Filter: \(filterById)")
+                }
+            }
+        }
+    }
     //MARK: - Endings
     func noMoreWords() {
         categoryCount.text = ""
@@ -92,35 +128,19 @@ class LearnWordsViewController: UIViewController {
         return
     }
     func endRound() {
+        if testVersion == true {
+            print("\(right) right answere's: \(rightWords)")
+            print("\(wrong) wrong answere's: \(wrongWords)")
+        }
         swipeDown.isEnabled = false
         wordLabel.text = "End"
         contextLabel.text = "You've got \(right) good answer, and \(wrong) wrong."
+        saveData()
         actualWord = 0
         right = 0
         wrong = 0
     }
-    //MARK: - Data manipulation methods
-    //Save data for right and wrong answer
-    func saveIfRight() {
-        do {
-            try realm.write {
-//                wordResults?[actualWord].setValue(false, forKey: pickWordsByFilter[0])
-//                wordResults?[actualWord].setValue(false, forKey: pickWordsByFilter[1])
-            }
-        } catch {
-            print("Error changing word status - \(pickWordsByFilter[1]), error: \(error)")
-        }
-    }
-    func saveIfWrong() {
-        do {
-            try realm.write {
-//                wordResults?[actualWord].setValue(false, forKey: pickWordsByFilter[0])
-//                //wordResults?[actualWord].setValue(true, forKey: pickWordsByFilter[1])
-            }
-        } catch {
-            print("Error changing word status - \(pickWordsByFilter[1]), error: \(error)")
-        }
-    }
+    //MARK: - Swiping methods
     //Check the word translation
     @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
         wordLabel.text = wordResults?[chosenWord].word_t
@@ -137,11 +157,12 @@ class LearnWordsViewController: UIViewController {
             checked = false
             
             if lastWord == false {
-                saveIfRight()
+                createRightArray()
                 actualWord += 1
                 if testVersion == true { print("---") }
                 loadWords()
             } else {
+                createRightArray()
                 endRound()
                 if testVersion == true { print("The end of a round") }
             }
@@ -154,11 +175,12 @@ class LearnWordsViewController: UIViewController {
             checked = false
             
             if lastWord == false {
-                saveIfWrong()
+                createWrongArray()
                 actualWord += 1
                 if testVersion == true { print("---") }
                 loadWords()
             } else {
+                createWrongArray()
                 endRound()
                 if testVersion == true { print("The end of a round") }
             }

@@ -27,6 +27,7 @@ class LearnWordsViewController: UIViewController {
     var wrong = 0
     var rightWords = [String]()
     var wrongWords = [String]()
+    var drawArray = [Int]()
     
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var categoryCount: UILabel!
@@ -55,13 +56,18 @@ class LearnWordsViewController: UIViewController {
                 print("filterSelected: \(pickWordsByFilter[filter])")
                 print("wordQuantity: \(wordQuantity)")
             }
+            //Set up draw
+            for i in 0...wordQuantity-1 {
+                drawArray.append(i)
+            }
+            if testVersion == true { print("drawArray: \(drawArray)") }
             loadWords()
         } else {
             noMoreWords()
         }
     }
     func loadWords() {
-        chosenWord = checkNumber()
+        chosenWord = drawArray.randomElement()!
         categoryCount.text = "\(actualWord+1) of \(wordQuantity)"
         wordLabel.text = wordResults?[chosenWord].word
         contextLabel.text = wordResults?[chosenWord].context
@@ -82,9 +88,6 @@ class LearnWordsViewController: UIViewController {
         } else {
             return true
         }
-    }
-    func checkNumber() -> Int {
-        return Int.random(in: 0..<wordQuantity)
     }
     func createRightArray() {
         rightWords.append((wordResults?[chosenWord].id)!)
@@ -157,6 +160,7 @@ class LearnWordsViewController: UIViewController {
             checked = false
             
             if lastWord == false {
+                drawArray.remove(at: chosenWord)
                 createRightArray()
                 actualWord += 1
                 if testVersion == true { print("---") }
@@ -175,6 +179,7 @@ class LearnWordsViewController: UIViewController {
             checked = false
             
             if lastWord == false {
+                drawArray.remove(at: chosenWord)
                 createWrongArray()
                 actualWord += 1
                 if testVersion == true { print("---") }

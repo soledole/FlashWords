@@ -17,13 +17,34 @@ class CategoryViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        loadCategories()
-        
+        setFirstTime()
         tableView.rowHeight = 100.0
-        
         //Show Realm Database Path
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        checkFirstRun()
+        loadCategories()
+    }
+    
+    //MARK: - Functions
+    func setFirstTime() {
+        let settingsObjects = realm.objects(Settings.self)
+        if settingsObjects.isEmpty {
+            try! realm.write {
+                realm.add(Settings())
+            }
+        } else { return }
+    }
+    
+    func checkFirstRun() {
+        let filterFirstTime = realm.objects(Settings.self).filter("firstTime = true")
+        if filterFirstTime.isEmpty {
+            return
+        } else {
+            performSegue(withIdentifier: "goToSettings", sender: self)
+            try! realm.write {
+                filterFirstTime.setValue(false, forKey: "firstTime")
+            }
+        }
     }
     
     //MARK: - TableView Datasource Methods

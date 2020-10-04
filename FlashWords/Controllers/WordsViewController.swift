@@ -107,7 +107,7 @@ class WordsViewController: UITableViewController {
 //MARK: - Search Bar Methods
 extension WordsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        wordResults = wordResults?.filter("word_t CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        wordResults = wordResults?.filter("word CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
         tableView.reloadData()
     }
 

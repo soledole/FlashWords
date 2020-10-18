@@ -41,54 +41,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uw0-SJ-88s">
                                         <rect key="frame" x="0.0" y="100" width="375" height="624"/>
                                         <subviews>
-                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="YMI-Zy-TEg">
-                                                <rect key="frame" x="8" y="10" width="359" height="32"/>
-                                                <segments>
-                                                    <segment title="pl"/>
-                                                    <segment title="eng"/>
-                                                    <segment title="de"/>
-                                                    <segment title="fr"/>
-                                                    <segment title="it"/>
-                                                </segments>
-                                            </segmentedControl>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GuY-GF-BxS">
-                                                <rect key="frame" x="137.66666666666666" y="61" width="100" height="50"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ix-84-IkA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="50" id="7pn-fI-Ooi"/>
-                                                            <constraint firstAttribute="height" constant="50" id="HMF-ff-3Be"/>
-                                                        </constraints>
-                                                        <inset key="contentEdgeInsets" minX="13" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                        <state key="normal" title="Button">
-                                                            <imageReference key="image" image="trash" catalog="system" symbolScale="large"/>
-                                                        </state>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oa3-aL-Dfz">
-                                                        <rect key="frame" x="50" y="0.0" width="50" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="50" id="41D-CZ-QQn"/>
-                                                            <constraint firstAttribute="height" constant="50" id="rWS-Zq-TYB"/>
-                                                        </constraints>
-                                                        <inset key="contentEdgeInsets" minX="11" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                        <state key="normal" title="Button">
-                                                            <imageReference key="image" image="icloud.and.arrow.down" catalog="system" symbolScale="large"/>
-                                                        </state>
-                                                    </button>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="iJS-Xc-idg"/>
-                                                </constraints>
-                                            </stackView>
+                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vl8-LU-9lM">
+                                                <rect key="frame" x="27.666666666666657" y="50" width="320" height="216"/>
+                                            </pickerView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="YMI-Zy-TEg" firstAttribute="leading" secondItem="Uw0-SJ-88s" secondAttribute="leading" constant="8" id="HzL-tj-TkI"/>
-                                            <constraint firstAttribute="trailing" secondItem="YMI-Zy-TEg" secondAttribute="trailing" constant="8" id="Lv5-BW-mXM"/>
-                                            <constraint firstItem="GuY-GF-BxS" firstAttribute="top" secondItem="YMI-Zy-TEg" secondAttribute="bottom" constant="20" id="Rbq-j7-1lg"/>
-                                            <constraint firstItem="YMI-Zy-TEg" firstAttribute="top" secondItem="Uw0-SJ-88s" secondAttribute="top" constant="10" id="pGc-QL-b6b"/>
-                                            <constraint firstItem="GuY-GF-BxS" firstAttribute="centerX" secondItem="Uw0-SJ-88s" secondAttribute="centerX" id="zUI-v3-ZPn"/>
+                                            <constraint firstItem="Vl8-LU-9lM" firstAttribute="top" secondItem="Uw0-SJ-88s" secondAttribute="top" constant="50" id="RHi-V1-Y0K"/>
+                                            <constraint firstItem="Vl8-LU-9lM" firstAttribute="centerX" secondItem="Uw0-SJ-88s" secondAttribute="centerX" id="pXe-ZB-smG"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -103,6 +63,9 @@
                             <constraint firstItem="oNM-Rc-XtV" firstAttribute="top" secondItem="dIN-dn-6q3" secondAttribute="top" id="I5H-pe-dyC"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="languagePickView" destination="Vl8-LU-9lM" id="Mm3-VQ-YYv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vyg-43-skP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -662,8 +625,6 @@
     </scenes>
     <resources>
         <image name="a.book.closed.ja" catalog="system" width="115" height="128"/>
-        <image name="icloud.and.arrow.down" catalog="system" width="128" height="112"/>
-        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

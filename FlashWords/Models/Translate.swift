@@ -8,35 +8,42 @@
 
 import Foundation
 import MLKitTranslate
+import RealmSwift
 
-let options = TranslatorOptions(sourceLanguage: .english, targetLanguage: .polish)
-let englishPolishTranslator = Translator.translator(options: options)
-
-let conditions = ModelDownloadConditions(
-    allowsCellularAccess: false,
-    allowsBackgroundDownloading: false
-)
+let realm = try! Realm()
+var testVersion = true
+let settings = realm.objects(Settings.self)
 
 protocol TranslateDelegate {
     func didTranslate(translatedWord: String)
 }
 
 struct Translate {
-    
     var delegate: TranslateDelegate?
     
+    let conditions = ModelDownloadConditions(
+        allowsCellularAccess: true,
+        allowsBackgroundDownloading: true
+    )
+    
     func fetchTranslate(for word: String) {
-        englishPolishTranslator.downloadModelIfNeeded(with: conditions) { error in
+        let sourceLanguage = settings[0].sourceLanguage
+        let targetLanguage = settings[0].targetLanguage
+        
+        let options = TranslatorOptions(sourceLanguage: TranslateLanguage(rawValue: sourceLanguage), targetLanguage: TranslateLanguage(rawValue: targetLanguage))
+        let langTranslator = Translator.translator(options: options)
+        
+        langTranslator.downloadModelIfNeeded(with: conditions) { error in
             guard error == nil else { return }
-            print("You already downloaded successfully language model.")
+            if testVersion == true { print("\(sourceLanguage) > \(targetLanguage) downloaded") }
         }
         
-        englishPolishTranslator.translate(word) { translatedText, error in
+        langTranslator.translate(word) { translatedText, error in
             guard error == nil, let translatedText = translatedText else { return }
-
-            print("Translated Word: \(translatedText)")
+            
+            if testVersion == true { print("\(sourceLanguage) > \(targetLanguage), \(word) > \(translatedText)")}
             self.delegate?.didTranslate(translatedWord: translatedText)
         }
     }
-    
 }
+

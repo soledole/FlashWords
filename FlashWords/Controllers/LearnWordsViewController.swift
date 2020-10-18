@@ -100,6 +100,7 @@ class LearnWordsViewController: UIViewController {
             for i in 0...rightWords.count-1 {
                 let filterById = realm.objects(Word.self).filter("id = %@", "\(rightWords[i])")
                 try! realm.write {
+                    filterById.setValue(false, forKey: "fresh")
                     filterById.setValue(false, forKey: "hard")
                 }
                 if testVersion == true {
@@ -113,6 +114,7 @@ class LearnWordsViewController: UIViewController {
             for i in 0...wrongWords.count-1 {
                 let filterById = realm.objects(Word.self).filter("id = %@", "\(wrongWords[i])")
                 try! realm.write {
+                    filterById.setValue(false, forKey: "fresh")
                     filterById.setValue(true, forKey: "hard")
                 }
                 if testVersion == true {
@@ -160,7 +162,9 @@ class LearnWordsViewController: UIViewController {
             checked = false
             
             if lastWord == false {
-                drawArray.remove(at: chosenWord)
+                if testVersion == true { print("Array before delate: \(drawArray), Word to Delate: \(chosenWord)") }
+                drawArray = drawArray.filter(){$0 != chosenWord}
+                if testVersion == true { print("Array after delate: \(drawArray)") }
                 createRightArray()
                 actualWord += 1
                 if testVersion == true { print("---") }
@@ -179,7 +183,9 @@ class LearnWordsViewController: UIViewController {
             checked = false
             
             if lastWord == false {
-                drawArray.remove(at: chosenWord)
+                if testVersion == true { print("Array before delate: \(drawArray), Word to Delate: \(chosenWord)") }
+                drawArray = drawArray.filter(){$0 != chosenWord}
+                if testVersion == true { print("Array after delate: \(drawArray)") }
                 createWrongArray()
                 actualWord += 1
                 if testVersion == true { print("---") }

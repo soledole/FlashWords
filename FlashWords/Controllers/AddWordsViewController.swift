@@ -29,6 +29,7 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
         self.contextInput.delegate = self
         
         translate.delegate = self
+        loadPlaceholders()
         
         //Close keyboard
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
@@ -89,10 +90,49 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
-    
+    //MARK: - Main Methods
+    func loadPlaceholders() {
+        let sourceLanguage = translate.checkLanguages().0
+        let targetLanguage = translate.checkLanguages().1
+        let wordInputPlaceholder: String
+        let word_tInputPlaceholder: String
+        let contextInputPlaceholder: String
+        
+        switch sourceLanguage {
+        case "pl":
+            wordInputPlaceholder = "Drzewo"
+            contextInputPlaceholder = "Ludzie używają drewna do budowy"
+        case "en":
+            wordInputPlaceholder = "Tree"
+            contextInputPlaceholder = "People use wood for construction"
+        case "de":
+            wordInputPlaceholder = "Holz"
+            contextInputPlaceholder = "Menschen verwenden Holz zum Bauen"
+        case "fr":
+            wordInputPlaceholder = "Bois"
+            contextInputPlaceholder = "Les gens utilisent le bois pour la construction"
+        case "es":
+            wordInputPlaceholder = "Madera"
+            contextInputPlaceholder = "La gente usa madera para la construcción"
+        default:
+            wordInputPlaceholder = "Three"
+            contextInputPlaceholder = "People use wood for construction"
+        }
+        
+        switch targetLanguage {
+        case "pl": word_tInputPlaceholder = "Drzewo"
+        case "en": word_tInputPlaceholder = "Tree"
+        case "de": word_tInputPlaceholder = "Holz"
+        case "fr": word_tInputPlaceholder = "Bois"
+        case "es": word_tInputPlaceholder = "Madera"
+        default: word_tInputPlaceholder = "Drzewo"
+        }
+        
+        wordInput.placeholder = wordInputPlaceholder
+        word_tInput.placeholder = word_tInputPlaceholder
+        contextInput.placeholder = contextInputPlaceholder
+    }
 }
-
 //MARK: - ML Kit Request
 extension AddWordsViewController: TranslateDelegate {
     

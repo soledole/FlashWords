@@ -18,7 +18,7 @@ protocol TranslateDelegate {
     func didTranslate(translatedWord: String)
 }
 
-struct Translate {
+class Translate {
     var delegate: TranslateDelegate?
     
     let conditions = ModelDownloadConditions(

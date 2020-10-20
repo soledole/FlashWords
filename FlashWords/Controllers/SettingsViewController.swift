@@ -21,12 +21,52 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         languagePickView.dataSource = self
         languagePickView.delegate = self
+        loadPickerPosition()
     }
 //MARK: - UI Elements
     
 //MARK: - Main methods
     
 //MARK: - Secondary Methods
+    func loadPickerPosition() {
+        let sourceLanguage = Translate().checkLanguages().0
+        let targetLanguage = Translate().checkLanguages().1
+        var sourcePosition: Int
+        var targetPosition: Int
+        
+        switch sourceLanguage {
+        case "pl":
+            sourcePosition = 0
+        case "en":
+            sourcePosition = 1
+        case "de":
+            sourcePosition = 2
+        case "fr":
+            sourcePosition = 3
+        case "es":
+            sourcePosition = 4
+        default:
+            sourcePosition = 1
+        }
+        
+        switch targetLanguage {
+        case "pl":
+            targetPosition = 0
+        case "en":
+            targetPosition = 1
+        case "de":
+            targetPosition = 2
+        case "fr":
+            targetPosition = 3
+        case "es":
+            targetPosition = 4
+        default:
+            targetPosition = 0
+        }
+        
+        languagePickView.selectRow(sourcePosition, inComponent: 0, animated: true)
+        languagePickView.selectRow(targetPosition, inComponent: 1, animated: true)
+    }
 //    func getModelLanguages(){
 //        let languagesArray = ["pl", "en", "de", "fr", "it"]
 //        var localModel = String(ModelManager.modelManager().downloadedTranslateModels.description)
@@ -67,5 +107,6 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             settings.setValue(sourceLangSelected, forKey: "sourceLanguage")
             settings.setValue(targetLangSelected, forKey: "targetLanguage")
         }
+        Translate().downloadModel()
     }
 }

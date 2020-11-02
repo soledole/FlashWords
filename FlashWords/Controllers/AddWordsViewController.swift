@@ -11,7 +11,6 @@ import RealmSwift
 
 class AddWordsViewController: UIViewController, UITextFieldDelegate {
     
-    //Initialize Realm and Others
     let realm = try! Realm()
     var sendCategory : Category?
     var instanceOfAdd : WordsViewController!
@@ -27,7 +26,6 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
         self.wordInput.delegate = self
         self.word_tInput.delegate = self
         self.contextInput.delegate = self
-        
         translate.delegate = self
         loadPlaceholders()
         
@@ -68,7 +66,7 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    private func switchBasedNextTextField(_ textField: UITextField) {
+    func switchBasedNextTextField(_ textField: UITextField) {
         switch textField {
         case self.wordInput:
             self.word_tInput.becomeFirstResponder()
@@ -90,6 +88,7 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
     //MARK: - Main Methods
     func loadPlaceholders() {
         let sourceLanguage = translate.checkLanguages().0
@@ -106,14 +105,14 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
             wordInputPlaceholder = "Tree"
             contextInputPlaceholder = "People use wood for construction"
         case "de":
-            wordInputPlaceholder = "Holz"
-            contextInputPlaceholder = "Menschen verwenden Holz zum Bauen"
+            wordInputPlaceholder = "Baum"
+            contextInputPlaceholder = "Menschen verwenden Baum zum Bauen"
         case "fr":
-            wordInputPlaceholder = "Bois"
-            contextInputPlaceholder = "Les gens utilisent le bois pour la construction"
+            wordInputPlaceholder = "Arbre"
+            contextInputPlaceholder = "Les gens utilisent le arbre pour la construction"
         case "es":
-            wordInputPlaceholder = "Madera"
-            contextInputPlaceholder = "La gente usa madera para la construcción"
+            wordInputPlaceholder = "Árbol"
+            contextInputPlaceholder = "La gente usa arbol para la construcción"
         default:
             wordInputPlaceholder = "Three"
             contextInputPlaceholder = "People use wood for construction"
@@ -122,9 +121,9 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
         switch targetLanguage {
         case "pl": word_tInputPlaceholder = "Drzewo"
         case "en": word_tInputPlaceholder = "Tree"
-        case "de": word_tInputPlaceholder = "Holz"
-        case "fr": word_tInputPlaceholder = "Bois"
-        case "es": word_tInputPlaceholder = "Madera"
+        case "de": word_tInputPlaceholder = "Baum"
+        case "fr": word_tInputPlaceholder = "Arbre"
+        case "es": word_tInputPlaceholder = "Árbol"
         default: word_tInputPlaceholder = "Drzewo"
         }
         
@@ -132,10 +131,12 @@ class AddWordsViewController: UIViewController, UITextFieldDelegate {
         word_tInput.placeholder = word_tInputPlaceholder
         contextInput.placeholder = contextInputPlaceholder
     }
+    
+    
 }
+
 //MARK: - ML Kit Request
 extension AddWordsViewController: TranslateDelegate {
-    
     func didTranslate(translatedWord: String) {
         DispatchQueue.main.async {
             self.word_tInput.text = translatedWord

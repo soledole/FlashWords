@@ -10,22 +10,22 @@ import UIKit
 import RealmSwift
 
 class CategoryViewController: UITableViewController {
-    //Initialize Realm and categories
+
     let realm = try! Realm()
     var categories : Results<Category>?
     var selectedCategory : Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setFirstTime()
         tableView.rowHeight = 100.0
         //Show Realm Database Path
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        setFirstTime()
         checkFirstRun()
         loadCategories()
     }
     
-    //MARK: - Functions
+    //MARK: - Main Methods
     func setFirstTime() {
         let settingsObjects = realm.objects(Settings.self)
         if settingsObjects.isEmpty {
@@ -47,13 +47,17 @@ class CategoryViewController: UITableViewController {
         }
     }
     
+    func loadCategories() {
+        categories = realm.objects(Category.self)
+        tableView.reloadData()
+    }
+    
     //MARK: - TableView Datasource Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
         return cell
@@ -66,7 +70,7 @@ class CategoryViewController: UITableViewController {
         let learnAction = UIContextualAction(style: .normal, title: "Learn") { (action, view, nil) in
             self.performSegue(withIdentifier: "goToLearn", sender: self)
         }
-        learnAction.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        learnAction.backgroundColor = #colorLiteral(red: 0.2743993998, green: 0.4862983823, blue: 0.1411508322, alpha: 1)
         learnAction.image = UIImage(named: "learn_icon")
         
         let config = UISwipeActionsConfiguration(actions: [learnAction])
@@ -92,12 +96,14 @@ class CategoryViewController: UITableViewController {
                     tableView.reloadData()
                 }
             }
+            
             alert.addAction(action)
             self.present(alert, animated: true, completion:{
                 alert.view.superview?.isUserInteractionEnabled = true
                 alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissOnTapOutside)))
             })
         }
+        
         //Edit Category
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
             
@@ -118,16 +124,19 @@ class CategoryViewController: UITableViewController {
                     tableView.reloadData()
                 }
             }
+            
             alert.addTextField { (alertTextField) in
                 alertTextField.text = self.categories?[indexPath.row].name
                 textField = alertTextField
             }
+            
             alert.addAction(action)
             self.present(alert, animated: true, completion:{
                 alert.view.superview?.isUserInteractionEnabled = true
                 alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissOnTapOutside)))
             })
         }
+        
         deleteAction.image = UIImage(named: "delete_icon")
         editAction.image = UIImage(named: "edit_icon")
         editAction.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
@@ -136,6 +145,7 @@ class CategoryViewController: UITableViewController {
         config.performsFirstActionWithFullSwipe = false
         return config
     }
+    
     @objc func dismissOnTapOutside(){
        dismiss(animated: true, completion: nil)
     }
@@ -152,6 +162,7 @@ class CategoryViewController: UITableViewController {
                 wordsVC.selectedCategory = categories?[indexPath.row]
             }
         }
+        
         if (segue.identifier == "goToLearn") {
             let learnWordsVC = segue.destination as! LearnWordsViewController
             learnWordsVC.sendCategory = categories?[selectedCategory]
@@ -170,19 +181,19 @@ class CategoryViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadCategories() {
-        categories = realm.objects(Category.self)
-        tableView.reloadData()
-    }
-    
     //MARK: - Add New Category
     @IBAction func addCategoryButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM dd,yyyy"
+            let dateForDatabase = dateFormatter.string(from: Date())
+            
             let newCategory = Category()
             newCategory.name = textField.text!
+            newCategory.date = dateForDatabase
             
             if textField.text!.isEmpty {
                 print("textField is empty")
@@ -190,10 +201,12 @@ class CategoryViewController: UITableViewController {
                 self.save(category: newCategory)
             }
         }
+        
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Enter the name"
             textField = alertTextField
         }
+        
         alert.addAction(action)
         self.present(alert, animated: true, completion:{
             alert.view.superview?.isUserInteractionEnabled = true

@@ -10,11 +10,10 @@ import UIKit
 import RealmSwift
 
 class WordsViewController: UITableViewController {
-    //Initialize Realm and wordResults
+
     let realm = try! Realm()
     var wordResults : Results<Word>?
     var selectedCell : Int = 0
-    
     var selectedCategory : Category? {
         didSet {
             loadWords()
@@ -23,7 +22,6 @@ class WordsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //Close keyboard
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
@@ -35,10 +33,8 @@ class WordsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordsCell", for: indexPath)
         if let word = wordResults?[indexPath.row] {
-            
             cell.textLabel?.text = word.word
             cell.detailTextLabel?.text = word.word_t
         } else {
@@ -64,6 +60,7 @@ class WordsViewController: UITableViewController {
                 tableView.reloadData()
             }
         }
+        
         //Edit Word
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
             self.performSegue(withIdentifier: "goToEditWord", sender: self)
@@ -91,20 +88,20 @@ class WordsViewController: UITableViewController {
         }
     }
     
-    //MARK: - Data Manipulation Methods
+    //MARK: - Main Methods
     func loadWords() {
-        //wordResults = realm.objects(Word.self) //To show all items
         wordResults = selectedCategory?.words.sorted(byKeyPath: "dateCreated", ascending: true)
         tableView.reloadData()
     }
     
-    //MARK: - Add New Word Methods
+    //MARK: - UI Methods
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "goToAddWord", sender: self)
     }
+    
+    
 }
 
-//MARK: - Search Bar Methods
 extension WordsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if searchBar.text!.isEmpty { } else {
@@ -112,7 +109,7 @@ extension WordsViewController: UISearchBarDelegate {
             tableView.reloadData()
         }
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadWords()

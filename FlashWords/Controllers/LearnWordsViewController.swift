@@ -11,11 +11,11 @@ import RealmSwift
 
 class LearnWordsViewController: UIViewController {
     
-    //Initialize Realm and Others
     let realm = try! Realm()
     var sendCategory : Category?
     var wordResults : Results<Word>?
     var testVersion = true
+    
     var wordQuantity = 0
     var actualWord = 0
     var chosenWord = 0
@@ -35,9 +35,13 @@ class LearnWordsViewController: UIViewController {
     @IBOutlet weak var contextLabel: UILabel!
     @IBOutlet var swipeDown: UISwipeGestureRecognizer!
     
+    //Arrows
+    @IBOutlet weak var leftArrow: UIView!
+    @IBOutlet weak var rightArrow: UIView!
+    @IBOutlet weak var downArrow: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         categoryLabel.text = sendCategory?.name
         startLearn()
     }
@@ -67,6 +71,7 @@ class LearnWordsViewController: UIViewController {
         }
     }
     func loadWords() {
+        showArrows(position: 1)
         chosenWord = drawArray.randomElement()!
         categoryCount.text = "\(actualWord+1) of \(wordQuantity)"
         wordLabel.text = wordResults?[chosenWord].word
@@ -76,10 +81,12 @@ class LearnWordsViewController: UIViewController {
             print("actualWord: \(actualWord)")
         }
     }
+    
     //MARK: - Secondary Methods
     func setWordResultForCategory() {
         wordResults = sendCategory?.words.sorted(byKeyPath: "dateCreated", ascending: true)
     }
+    
     func filterWords() -> Bool {
         wordResults = wordResults!.filter("\(pickWordsByFilter[filter]) = true")
         wordQuantity = wordResults!.count
@@ -89,20 +96,24 @@ class LearnWordsViewController: UIViewController {
             return true
         }
     }
+    
     func createRightArray() {
         rightWords.append((wordResults?[chosenWord].id)!)
     }
+    
     func createWrongArray() {
         wrongWords.append((wordResults?[chosenWord].id)!)
     }
+    
     func saveData() {
         if right > 0 {
             for i in 0...rightWords.count-1 {
                 let filterById = realm.objects(Word.self).filter("id = %@", "\(rightWords[i])")
-                try! realm.write {
-                    filterById.setValue(false, forKey: "fresh")
-                    filterById.setValue(false, forKey: "hard")
-                }
+                //For future update
+//                try! realm.write {
+//                    filterById.setValue(false, forKey: "fresh")
+//                    filterById.setValue(false, forKey: "hard")
+//                }
                 if testVersion == true {
                     print("---Save-right answere---")
                     print("\(i) Word: \(rightWords[i])")
@@ -110,13 +121,15 @@ class LearnWordsViewController: UIViewController {
                 }
             }
         }
+        
         if wrong > 0 {
             for i in 0...wrongWords.count-1 {
                 let filterById = realm.objects(Word.self).filter("id = %@", "\(wrongWords[i])")
-                try! realm.write {
-                    filterById.setValue(false, forKey: "fresh")
-                    filterById.setValue(true, forKey: "hard")
-                }
+                //For future update
+//                try! realm.write {
+//                    filterById.setValue(false, forKey: "fresh")
+//                    filterById.setValue(true, forKey: "hard")
+//                }
                 if testVersion == true {
                     print("---Save-wrong answere---")
                     print("\(i) Word: \(wrongWords[i])")
@@ -125,6 +138,24 @@ class LearnWordsViewController: UIViewController {
             }
         }
     }
+    
+    func showArrows(position: Int) {
+        //0 - all hidden, 1 - only down, 2- only left and right
+        if position == 0 {
+            leftArrow.isHidden = true
+            rightArrow.isHidden = true
+            downArrow.isHidden = true
+        } else if position == 1 {
+            leftArrow.isHidden = true
+            rightArrow.isHidden = true
+            downArrow.isHidden = false
+        } else if position == 2 {
+            leftArrow.isHidden = false
+            rightArrow.isHidden = false
+            downArrow.isHidden = true
+        }
+    }
+    
     //MARK: - Endings
     func noMoreWords() {
         categoryCount.text = ""
@@ -132,7 +163,9 @@ class LearnWordsViewController: UIViewController {
         contextLabel.text = "You have to wait until tomorow for the next repeat."
         return
     }
+    
     func endRound() {
+        showArrows(position: 0)
         if testVersion == true {
             print("\(right) right answere's: \(rightWords)")
             print("\(wrong) wrong answere's: \(wrongWords)")
@@ -145,11 +178,12 @@ class LearnWordsViewController: UIViewController {
         right = 0
         wrong = 0
     }
+    
     //MARK: - Swiping methods
-    //Check the word translation
     @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
         wordLabel.text = wordResults?[chosenWord].word_t
         checked = true
+        showArrows(position: 2)
         if wordQuantity == actualWord+1 {
             lastWord = true
             if testVersion == true { print("It will be the last word") }

@@ -11,7 +11,6 @@ import RealmSwift
 
 class EditWordsViewController: UIViewController, UITextFieldDelegate {
     
-    //Initialize Realm and Others
     let realm = try! Realm()
     var sendWord : Word?
     var sendCell : Int?
@@ -29,22 +28,19 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
         self.wordInput.delegate = self
         self.word_tInput.delegate = self
         self.contextInput.delegate = self
-        
         translate.delegate = self
         
         loadData()
-        
         //Close keyboard
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
     
-    //MARK: - Load Datasource Methods
+    //MARK: - Main Methods
     func loadData() {
         wordInput.text = sendWord?.word
         word_tInput.text = self.sendWord?.word_t
         contextInput.text = self.sendWord?.context
-        
         wordResults = realm.objects(Word.self)
     }
     
@@ -74,7 +70,7 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    private func switchBasedNextTextField(_ textField: UITextField) {
+    func switchBasedNextTextField(_ textField: UITextField) {
         switch textField {
         case self.wordInput:
             self.word_tInput.becomeFirstResponder()
@@ -100,9 +96,7 @@ class EditWordsViewController: UIViewController, UITextFieldDelegate {
 
 //MARK: - ML Kit Request
 extension EditWordsViewController: TranslateDelegate {
-    
     func didTranslate(translatedWord: String) {
-        
         DispatchQueue.main.async {
             self.word_tInput.text = translatedWord
         }

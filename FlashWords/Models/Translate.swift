@@ -33,7 +33,6 @@ class Translate {
         
         langTranslator.translate(word) { translatedText, error in
             guard error == nil, let translatedText = translatedText else { return }
-            
             if testVersion == true { print("\(sourceLanguage) > \(targetLanguage), \(word) > \(translatedText)")}
             self.delegate?.didTranslate(translatedWord: translatedText)
         }
@@ -54,9 +53,9 @@ class Translate {
         
         langTranslator.downloadModelIfNeeded(with: conditions) { error in
             guard error == nil else { return }
-            if testVersion == true { print("\(sourceLanguage) > \(targetLanguage) downloaded") }
         }
         return langTranslator
     }
+    
 }
 

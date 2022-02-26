@@ -1,10 +1,12 @@
 # FlashWords
 
-![logo](https://i.imgur.com/V2S4MmS.png)
+![logo](https://i.imgur.com/SUSKH7x.png)
 
 A simple and minimalistic app for learning new words by revising them on flashcards.
 
 Now supports six languages: polish, english, deutsh, french, spanish.
+
+Technologies: Swift, Realm Swift, ML Kit Translate
 
 ## 1. Set the language
 
